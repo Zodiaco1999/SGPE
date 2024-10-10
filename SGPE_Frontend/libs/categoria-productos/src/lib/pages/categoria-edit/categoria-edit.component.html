@@ -1,0 +1,56 @@
+<sgpe-ws-espiga
+  title="{{idCategoriaProducto ? 'Editar' : 'Crear'}} Producto"
+  titleColor="{{idCategoriaProducto ? 'success' : 'primary'}}"
+  [previousPages]="[{title: 'Categorias producto', link:'/categoria-productos'}]"
+/>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body p-4">
+        <div class="col-lg-12 ms-lg-auto">
+          <div class="mt-4 mt-lg-0">
+            <form [formGroup]="formBuilder.formGroup" (ngSubmit)="saveCategoria()">
+
+              <div class="row mb-4">
+                <label class="col-sm-3 col-form-label">Empresa</label>
+                <div class="col-sm-9">
+                  <select class="form-select" [ngClass]="{'is-invalid': formBuilder.formErrors['idEmpresa']}" formControlName="idEmpresa">
+                    <option value="0">Seleccione una empresa</option>
+                    <option *ngFor="let e of empresas" [value]="e.idEmpresa">{{ e.nombreEmpresa }}</option>
+                  </select>
+                  <small class="text-danger">{{ formBuilder.formErrors['idEmpresa'] }}</small>
+                </div>
+              </div>
+
+              <div class="row mb-4">
+                <label class="col-sm-3 col-form-label">Codigo Categoria</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" [ngClass]="{'is-invalid': formBuilder.formErrors['codigoCategoriaProducto']}" placeholder="Codigo categoria" formControlName="codigoCategoriaProducto" >
+                  <small class="text-danger">{{ formBuilder.formErrors['codigoCategoriaProducto'] }}</small>
+                </div>
+              </div>
+
+              <div class="row mb-4">
+                <label class="col-sm-3 col-form-label">Nombre Categoria</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" [ngClass]="{'is-invalid': formBuilder.formErrors['nombreCategoriaProducto']}" placeholder="Nombre Categoria" formControlName="nombreCategoriaProducto" >
+                  <small class="text-danger">{{ formBuilder.formErrors['nombreCategoriaProducto'] }}</small>
+                </div>
+              </div>
+
+              <div class="row justify-content-end">
+                <div class="col-sm-9">
+                  <div>
+                    <button type="submit" class="btn btn-primary w-md" [disabled]="formBuilder.formGroup.invalid">Guardar</button>
+                  </div>
+                </div>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

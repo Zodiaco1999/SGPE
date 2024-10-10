@@ -1,0 +1,64 @@
+<sgpe-ws-espiga
+  title="Detalle usuario"
+  titleColor="info"
+  [previousPages]="[{title: 'Usuarios', link:'/usuarios'}]"
+/>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <div *ngIf="usuario" class="row">
+          <div class="col-4">
+            <label class="form-label">Identificación</label>
+            <p>{{ usuario.cedulaUsuario }}</p>
+          </div>
+
+          <div class="col-4">
+            <label class="form-label">Nombres</label>
+            <p>{{ usuario.nombres }}</p>
+          </div>
+
+          <div class="col-4">
+            <label class="form-label">Apellidos</label>
+            <p>{{ usuario.apellidos }}</p>
+          </div>
+
+          <div class="col-4">
+            <label class="form-label">Correo</label>
+            <p>{{ usuario.correo }}</p>
+          </div>
+
+          <div class="col-4">
+            <label class="form-label">Estado</label>
+            <p>{{ usuario.activo ? 'Activo':'Inactivo' }}</p>
+          </div>
+
+          <div class="col-4">
+            <label class="form-label">Empresa</label>
+            <p>{{ usuario.nombreEmpresa }}</p>
+          </div>
+        </div>
+
+        <h2>Perfiles Asignados</h2>
+
+        <table class="table table-hover table-sm">
+          <thead>
+            <tr>
+              <th scope="col">Nombre Perfil</th>
+              <th scope="col">Fecha Incia</th>
+              <th scope="col">Fecha Termina</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let p of usuario?.usuarioPerfils">
+              <td>{{ p.nombrePerfil }}</td>
+              <td>{{ p.fechaInicia | date: 'd/M/yyyy' }}</td>
+              <td>{{ p.fechaTermina | date: 'd/M/yyyy' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

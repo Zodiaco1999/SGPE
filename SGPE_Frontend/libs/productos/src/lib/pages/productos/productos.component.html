@@ -1,0 +1,62 @@
+<div class="card-body" >
+  <h1>Productos</h1>
+  <div class="d-flex justify-content-between mb-2">
+    <a routerLink="crear" class="btn-sm btn-primary waves-effect btn-label waves-light btn-h">
+      <i class="bx bx-plus label-icon"></i>Adicionar
+    </a>
+    <div>
+      <input class="form-control form-control-sm" placeholder="Buscar" type="text" name="searchTerm"
+        [(ngModel)]="productoService.searchTerm" />
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-sm mb-0">
+      <thead>
+        <tr>
+          <th sortable="codigoErp" (sort)="productoService.onSort($event)">Codigo Erp</th>
+          <th sortable="descripcionProducto" (sort)="productoService.onSort($event)">Descripcion</th>
+          <th sortable="IdCategoriaProductoNavigation.NombreCategoriaProducto" (sort)="productoService.onSort($event)">Categoria Producto</th>
+          <th sortable="precio" (sort)="productoService.onSort($event)">Precio</th>
+          <th sortable="estadoProducto" (sort)="productoService.onSort($event)">Estado</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let p of data$ | async">
+          <td>{{ p.codigoErp }}</td>
+          <td>{{ p.descripcionProducto }}</td>
+          <td>{{ p.categoriaProducto }}</td>
+          <td>{{ p.precio | currency }}</td>
+          <td>{{ p.estadoProducto }}</td>
+          <td>
+            <a [routerLink]="['editar', p.idProducto]" class="btn-sm btn-success waves-effect btn-label waves-light btn-h">
+              <i class="bx bx-pencil label-icon"></i>Editar
+            </a>
+          </td>
+          <td>
+            <div class="dropdown">
+              <button class="btn-sm btn-info dropdown-toggle" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                Estado <i class="mdi mdi-chevron-down"></i>
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <div *ngFor="let e of estadoProductos">
+                  <div class="dropdown-divider"></div>
+                  <a (click)="changeStatus(p, e.idEstadoProducto)" class="dropdown-item hand">{{
+                    e.descripcionEstadoProducto }}</a>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <sgpe-ws-pagination
+      [(page)]="productoService.page"
+      [(pageSize)]="productoService.pageSize"
+      [totalRecordsObs]="totalRecords$"
+    />
+  </div>
+</div>

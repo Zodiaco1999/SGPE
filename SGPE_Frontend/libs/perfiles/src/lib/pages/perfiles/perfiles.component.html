@@ -1,0 +1,57 @@
+<div class="card-body">
+  <h1>Perfiles</h1>
+  <div class="d-flex justify-content-between mb-2">
+    <a routerLink="crear" class="btn-sm btn-primary waves-effect btn-label waves-light btn-h">
+      <i class="bx bx-plus label-icon"></i>Adicionar
+    </a>
+    <div>
+      <input class="form-control form-control-sm" placeholder="Buscar" type="text" name="searchTerm"
+        [(ngModel)]="perfilService.searchTerm" />
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-sm mb-0">
+      <thead>
+        <tr>
+          <th>Nombre perfil</th>
+          <th>Descrpcion</th>
+          <th>Estado</th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let p of data$ | async">
+          <td>{{ p.nombrePerfil }}</td>
+          <td>{{ p.descPerfil }}</td>
+          <td>{{ p.activo ? 'Activo' : 'Inactivo'}}</td>
+          <td class="px-0 mx-0">
+            <a [routerLink]="['editar', p.idPerfil]" class="btn-sm btn-success waves-effect btn-label waves-light btn-h">
+              <i class="bx bx-pencil label-icon"></i>Editar
+            </a>
+          </td>
+          <td class="px-0 pb-0 m-0">
+            <a [routerLink]="['detalle', p.idPerfil]"
+            class="btn-sm btn-info waves-effect btn-label waves-light btn-h">
+              <i class="bx bx-search label-icon"></i>Detalle
+            </a>
+          </td>
+          <td class="px-0 mx-0">
+            <a (click)="changeStatusPerfil(p.idPerfil)"
+            class="btn btn-outline-{{p.activo ? 'danger' : 'success'}} btn-sm waves-effect waves-light btn-h btn-w">
+              <i class="bx bx-{{p.activo ? 'x' : 'check'}} label-icon me-2"></i>
+              {{ p.activo ? 'Inactivar' : 'Activar' }}
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <sgpe-ws-pagination
+    [(page)]="perfilService.page"
+    [(pageSize)]="perfilService.pageSize"
+    [totalRecordsObs]="totalRecords$"
+  />
+  </div>
+</div>

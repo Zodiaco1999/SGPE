@@ -1,0 +1,29 @@
+<div class="text-center">
+  <h5 class="mb-0">Recuperar Contraseña</h5>
+</div>
+<div class="alert alert-success text-center my-4" role="alert">
+  ¡Ingrese su cedula para enviarle un mensaje al correo eletrónico registrado!
+</div>
+
+<form [formGroup]="formBuilder.formGroup" class="mt-4">
+  <div class="mb-3">
+      <label class="form-label">Cedula</label>
+      <input type="text" class="form-control" placeholder="Digite su cedula" formControlName="cedula" [ngClass]="{'is-invalid' : formBuilder.formErrors['cedula']}" />
+      <small class="text-danger">{{ formBuilder.formErrors['cedula'] }}</small>
+  </div>
+  <div class="mb-3 mt-4">
+      <button
+        (click)="sendEmailResetPassword()"
+        class="btn btn-primary w-100 waves-effect btn-label waves-light"
+        [disabled]="formBuilder.formGroup.invalid">
+        <i class="bx bx-mail-send label-icon"></i>Enviar correo
+      </button>
+  </div>
+</form>
+
+<div class="mt-5 text-center">
+  <p class="text-muted mb-0">
+      Recordaste?
+      <a routerLink="/auth" class="text-primary fw-semibold"> Inicia Sesion</a>
+  </p>
+</div>

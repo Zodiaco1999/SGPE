@@ -1,0 +1,35 @@
+<h2 class="text-primary">{{ action }}</h2>
+
+<div class="row mt-4">
+  <div class="col-md-7">
+    <div class="card">
+      <div class="card-body p-4">
+        <div class="col-lg-12 ms-lg-auto">
+          <div class="mt-4 mt-lg-0">
+
+            <form [formGroup]="formBuilder.formGroup">
+              <div class="row mb-4">
+                <label class="col-sm-4 col-form-label">Correo electrónico</label>
+                <div class="col-sm-8">
+                  <input type="email" class="form-control" placeholder="ingrese el correo electrónico" formControlName="correo" [ngClass]="{'is-invalid' : formBuilder.formErrors['correo']}" />
+                  <small class="text-danger">{{ formBuilder.formErrors['correo'] }}</small>
+                </div>
+              </div>
+
+              <div class="row justify-content-end">
+                <div class="col-sm-8">
+                  <button
+                    (click)="sendEmailChangeEmail()"
+                    [disabled]="formBuilder.formGroup.invalid || email === formBuilder.formGroup.get('correo')?.value"
+                    class="btn btn-primary waves-effect btn-label waves-light">
+                    <i class="bx bx-mail-send label-icon"></i>{{ action }}</button>
+                </div>
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

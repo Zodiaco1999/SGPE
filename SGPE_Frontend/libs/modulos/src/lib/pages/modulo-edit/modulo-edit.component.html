@@ -1,0 +1,162 @@
+<sgpe-ws-espiga title="{{idModulo ? 'Editar' : 'Crear'}} Modulo" titleColor="{{idModulo ? 'success' : 'primary'}}"
+  [previousPages]="[{title: 'Modulos', link:'/modulos'}]" />
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body p-4">
+        <div class="col-lg-12 ms-lg-auto">
+          <div class="mt-4 mt-lg-0">
+            <form [formGroup]="formBuilder.formGroup">
+
+              <div class="row mb-4">
+                <label class="col-sm-3 col-form-label">Nombre Modulo</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control"
+                    [ngClass]="{'is-invalid': formBuilder.formErrors['nombreModulo']}" placeholder="Nombre modulo"
+                    formControlName="nombreModulo">
+                  <small class="text-danger">{{ formBuilder.formErrors['nombreModulo'] }}</small>
+                </div>
+              </div>
+
+              <div class="row mb-4">
+                <label class="col-sm-3 col-form-label">Descripción</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control"
+                    [ngClass]="{'is-invalid': formBuilder.formErrors['descModulo']}" placeholder="Descripción"
+                    formControlName="descModulo">
+                  <small class="text-danger">{{ formBuilder.formErrors['descModulo'] }}</small>
+                </div>
+              </div>
+
+              <div class="row mb-4">
+                <label class="col-sm-3 col-form-label">Icono Prefijo</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control"
+                    [ngClass]="{'is-invalid': formBuilder.formErrors['iconoPrefijo']}" placeholder="Icono prefijo"
+                    formControlName="iconoPrefijo">
+                  <small class="text-danger">{{ formBuilder.formErrors['iconoPrefijo'] }}</small>
+                </div>
+              </div>
+
+              <div class="row mb-4">
+                <label class="col-sm-3 col-form-label">Icono Nombre</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control"
+                    [ngClass]="{'is-invalid': formBuilder.formErrors['iconoNombre']}" placeholder="Icono nombre"
+                    formControlName="iconoNombre">
+                  <small class="text-danger">{{ formBuilder.formErrors['iconoNombre'] }}</small>
+                </div>
+              </div>
+
+              <div class="row mb-4">
+                <label class="col-sm-3 col-form-label">Orden Visualización</label>
+                <div class="col-sm-9">
+                  <input type="number" class="form-control" [ngClass]="{'is-invalid': formBuilder.formErrors['orden']}"
+                    placeholder="Orden visualización" formControlName="orden">
+                  <small class="text-danger">{{ formBuilder.formErrors['orden'] }}</small>
+                </div>
+              </div>
+
+            </form>
+
+            <h2 class="text-info">Menús</h2>
+
+            <button class="btn-sm btn-primary waves-effect btn-label waves-light btn-h" (click)="openModal()">
+              <i class="bx bx-plus label-icon"></i>Adicionar
+            </button>
+
+            <table class="table table-hover table-sm">
+              <thead>
+                <tr>
+                  <th scope="col">Nombre Menu</th>
+                  <th scope="col">Descripción</th>
+                  <th scope="col">Etiqueta</th>
+                  <th scope="col">Url</th>
+                  <th scope="col">Orden</th>
+                  <th scope="col">Estado</th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let m of menus">
+                  <td>{{ m.nombreMenu }}</td>
+                  <td>{{ m.descMenu }}</td>
+                  <td>{{ m.etiquetaMenu }}</td>
+                  <td>{{ m.url }}</td>
+                  <td>{{ m.orden }}</td>
+                  <td>{{ m.activo ? 'Activo':'Inactivo' }}</td>
+                  <td>
+                    <i class="bx bx-{{m.consulta ? 'check' : 'x'}} label-icon text-danger ms-2 ico-scale"></i>
+                    <small class="d-block m-0 p-0">consulta</small>
+                  </td>
+                  <td>
+                    <i class="bx bx-{{m.inserta ? 'check' : 'x'}} label-icon text-danger ms-2 ico-scale"></i>
+                    <small class="d-block m-0 p-0">inserta</small>
+                  </td>
+                  <td>
+                    <i class="bx bx-{{m.actualiza ? 'check' : 'x'}} label-icon text-danger ms-2 ico-scale"></i>
+                    <small class="d-block m-0 p-0">actualiza</small>
+                  </td>
+                  <td>
+                    <i class="bx bx-{{m.elimina ? 'check' : 'x'}} label-icon text-danger ms-2 ico-scale"></i>
+                    <small class="d-block m-0 p-0">elimina</small>
+                  </td>
+                  <td>
+                    <i class="bx bx-{{m.activa ? 'check' : 'x'}} label-icon text-danger ms-2 ico-scale"></i>
+                    <small class="d-block m-0 p-0">activa</small>
+                  </td>
+                  <td>
+                    <i class="bx bx-{{m.ejecuta ? 'check' : 'x'}} label-icon text-danger ms-2 ico-scale"></i>
+                    <small class="d-block m-0 p-0">ejecuta</small>
+                  </td>
+                  <td>
+                    <div class="dropdown">
+                      <button class="btn btn-link font-size-16 shadow-none py-0 text-muted dropdown-toggle"
+                        type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bx bx-dots-horizontal-rounded"></i>
+                      </button>
+                      <ul class="dropdown-menu dropdown-menu-end p-0">
+                        <li>
+                          <a class="dropdown-item hand text-{{m.activo ? 'danger' : 'success'}}"
+                            (click)="changeStatusMenu(m)">
+                            <i class="bx bx-{{m.activo ? 'x' : 'check'}} label-icon me-2"></i>
+                            {{ m.activo ? 'Inactivar' : 'Activar' }}
+                          </a>
+                        </li>
+                        <li>
+                          <a class="dropdown-item hand bg-info text-white" (click)="editMenu(m)">
+                            <i class="bx bx-pencil label-icon me-2"></i>Editar
+                          </a>
+                        </li>
+                        <li>
+                          <a class="dropdown-item hand bg-danger text-white" (click)="deleteMenu(m)">
+                            <i class="bx bx-trash label-icon me-2"></i>Eliminar
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="row justify-content-end mt-5">
+              <div class="col-sm-9">
+                <div class="d-flex justify-content-end">
+                  <button type="submit" class="btn btn-primary w-md"
+                    [disabled]="formBuilder.formGroup.invalid" (click)="saveModulo()">Guardar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,120 @@
+<sgpe-ws-espiga
+  title="{{idProducto ? 'Editar' : 'Crear'}} Producto"
+  titleColor="{{idProducto ? 'success' : 'primary'}}"
+  [previousPages]="[{title: 'Productos', link:'/productos'}]"
+/>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body p-4">
+        <div class="col-lg-12 ms-lg-auto">
+          <div class="mt-4 mt-lg-0">
+            <form [formGroup]="formBuilder.formGroup" (ngSubmit)="saveProducto()">
+
+              <div class="row mb-4">
+                <label class="col-sm-3 col-form-label">Empresa</label>
+                <div class="col-sm-9">
+                  <select class="form-select" [ngClass]="{'is-invalid': formBuilder.formErrors['idEmpresa']}" formControlName="idEmpresa">
+                    <option value="0">Seleccione una empresa</option>
+                    <option *ngFor="let e of empresas" [value]="e.idEmpresa">{{ e.nombreEmpresa }}</option>
+                  </select>
+                  <small class="text-danger">{{ formBuilder.formErrors['idEmpresa'] }}</small>
+                </div>
+              </div>
+
+              <div class="row mb-4">
+                <label class="col-sm-3 col-form-label">Categoria Producto</label>
+                <div class="col-sm-9">
+                  <select class="form-select" [ngClass]="{'is-invalid': formBuilder.formErrors['idCategoriaProducto']}" formControlName="idCategoriaProducto">
+                    <option value="0">Seleccione una categoria</option>
+                    <option *ngFor="let c of categorias" [value]="c.idCategoriaProducto">{{ c.nombreCategoriaProducto }}</option>
+                  </select>
+                  <small class="text-danger">{{ formBuilder.formErrors['idCategoriaProducto'] }}</small>
+                </div>
+              </div>
+
+
+              <div class="row mb-4">
+                <label class="col-sm-3 col-form-label">Codigo ERP</label>
+                <div class="col-sm-9">
+                  <input type="number" class="form-control" [ngClass]="{'is-invalid': formBuilder.formErrors['codigoErp']}" placeholder="Codigo ERP" formControlName="codigoErp" >
+                  <small class="text-danger">{{ formBuilder.formErrors['codigoErp'] }}</small>
+                </div>
+              </div>
+
+              <div class="row mb-4">
+                <label class="col-sm-3 col-form-label">Descripcion</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" [ngClass]="{'is-invalid': formBuilder.formErrors['descripcionProducto']}" placeholder="Descripcion" formControlName="descripcionProducto" >
+                  <small class="text-danger">{{ formBuilder.formErrors['descripcionProducto'] }}</small>
+                </div>
+              </div>
+
+              <div class="row mb-4">
+                <label class="col-sm-3 col-form-label">Precio</label>
+                <div class="col-sm-9">
+                  <input type="number" class="form-control" [ngClass]="{'is-invalid': formBuilder.formErrors['precio']}" placeholder="Precio" formControlName="precio" >
+                  <small class="text-danger">{{ formBuilder.formErrors['precio'] }}</small>
+                </div>
+              </div>
+
+              <div class="row mb-4">
+                <label class="col-sm-3 col-form-label">Imagen</label>
+                <div class="col-sm-9">
+
+                  <ng-container *ngIf="!image">
+                    <input type="file" id="imageUsuario" (change)="fileProgress($event)" class="file-input" />
+                    <label for="imageUsuario" class="cursor w-100 px-3 py-2 m-0 content">
+                      <div style="height: 250px; width: 100%;" class="border p-5">
+                        <div class="text-center mt-5">
+                          <i class="dripicons-camera"></i>
+                          <br />
+                          <span> Agregar imagen</span>
+                        </div>
+                      </div>
+                    </label>
+                  </ng-container>
+
+                  <ng-container *ngIf="image">
+                    <div class="px-3 py-2 m-0">
+                      <div class="border p-0" style="height: 250px; width: 100%; position: relative; text-align: center;">
+                        <img [src]="image" class="image-container img-fluid"style="height: 100%;" />
+                      </div>
+                      <input type="file" id="imageUsuario" (change)="fileProgress($event)" class="file-input"/>
+                      <div class="w-100 content mt-2" style="text-align: center;">
+                        <label for="imageUsuario" class="btn btn-primary">
+                          <i class="dripicons-camera"></i>
+                          Cambiar foto
+                        </label>
+                      </div>
+                    </div>
+                  </ng-container>
+
+                </div>
+              </div>
+
+              <div class="row mb-4">
+                <label class="col-sm-3 col-form-label">Orden Visualizacion</label>
+                <div class="col-sm-9">
+                  <input type="number" class="form-control" [ngClass]="{'is-invalid': formBuilder.formErrors['ordenVisualizacion']}" placeholder="Orden Visualizacion" formControlName="ordenVisualizacion" >
+                  <small class="text-danger">{{ formBuilder.formErrors['ordenVisualizacion'] }}</small>
+                </div>
+              </div>
+
+              <div class="row justify-content-end">
+                <div class="col-sm-9">
+                  <div>
+                    <button type="submit" class="btn btn-primary w-md" [disabled]="formBuilder.formGroup.invalid">Guardar</button>
+                  </div>
+                </div>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

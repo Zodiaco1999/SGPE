@@ -1,0 +1,39 @@
+.in-number-size {
+  width: 80px;
+  height: 20px;
+}
+
+tbody {
+  font-size: 12px;
+}
+
+td {
+  margin-bottom: 0;
+}
+
+.custom-fixed {
+  position: fixed;
+  bottom: 10%;
+  right: 0%;
+  margin-right: -40px;
+  z-index: 2;
+}
+
+.ms-6 {
+  margin-left: 60px;
+}
+
+img {
+  width: 20px;
+  cursor: pointer;
+  border: none;
+}
+
+img:hover {
+  -webkit-transform: scale(17);
+  -ms-transform: scale(17);
+  transform: scale(17);
+  transition: 1s ease;
+  z-index: 10000;
+  position: absolute;
+}

@@ -1,0 +1,62 @@
+<div class="card-body">
+  <h1>Usuarios</h1>
+  <div class="d-flex justify-content-between mb-2">
+    <a routerLink="crear" class="btn-sm btn-primary waves-effect btn-label waves-light btn-h">
+      <i class="bx bx-plus label-icon"></i>Adicionar
+    </a>
+    <div>
+      <input class="form-control" placeholder="Buscar" type="text" name="searchTerm"
+        [(ngModel)]="usuarioService.searchTerm" />
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-sm mb-0">
+      <thead>
+        <tr>
+          <th>Identificación</th>
+          <th>Nombres</th>
+          <th>Apellidos</th>
+          <th>Email</th>
+          <th>Estado</th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let u of data$ | async">
+          <td>{{ u.cedulaUsuario }}</td>
+          <td>{{ u.nombres }}</td>
+          <td>{{ u.apellidos }}</td>
+          <td>{{ u.correo }}</td>
+          <td>{{ u.activo ? 'Activo' : 'Inactivo' }}</td>
+          <td  class="px-0 pb-0 m-0">
+            <a [routerLink]="['editar', u.idUsuario]"
+            class="btn-sm btn-success waves-effect btn-label waves-light btn-h">
+              <i class="bx bx-pencil label-icon"></i>Editar
+            </a>
+          </td>
+          <td class="px-0 pb-0 m-0">
+            <a [routerLink]="['detalle', u.idUsuario]"
+            class="btn-sm btn-info waves-effect btn-label waves-light btn-h">
+              <i class="bx bx-search label-icon"></i>Detalle
+            </a>
+          </td>
+          <td class="px-0 pb-0 m-0">
+            <a (click)="changeStatus(u)"
+            class="btn btn-outline-{{u.activo ? 'danger' : 'success'}} btn-sm waves-effect waves-light btn-h btn-w">
+              <i class="bx bx-{{u.activo ? 'x' : 'check'}} label-icon me-2"></i>
+              {{ u.activo ? 'Inactivar' : 'Activar' }}
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <sgpe-ws-pagination
+    [(page)]="usuarioService.page"
+    [(pageSize)]="usuarioService.pageSize"
+    [totalRecordsObs]="totalRecords$"
+  />
+  </div>
+</div>

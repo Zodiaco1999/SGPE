@@ -1,0 +1,195 @@
+<sgpe-ws-espiga
+  title="{{idPerfil ? 'Editar' : 'Crear'}} perfil"
+  titleColor="{{idPerfil ? 'success' : 'primary'}}"
+  [previousPages]="[{title: 'Perfiles', link:'/perfiles'}]"
+/>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body p-4">
+        <div class="col-lg-12 ms-lg-auto">
+          <div class="mt-4 mt-lg-0">
+
+            <form [formGroup]="formBuilder.formGroup">
+              <div class="row">
+                <div class="col-lg-6">
+                  <div>
+                    <div>
+                      <label for="example-text-input" class="form-label">Nombre perfil</label>
+                      <input type="text" class="form-control" [ngClass]="{'is-invalid': formBuilder.formErrors['nombrePerfil']}" placeholder="Nombre perfil" formControlName="nombrePerfil">
+                      <small class="text-danger">{{ formBuilder.formErrors['nombrePerfil'] }}</small>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div>
+                    <div>
+                      <label for="example-text-input" class="form-label">Descripción</label>
+                      <input type="text" class="form-control" [ngClass]="{'is-invalid': formBuilder.formErrors['descPerfil']}" placeholder="Descripción" formControlName="descPerfil">
+                      <small class="text-danger">{{ formBuilder.formErrors['descPerfil'] }}</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+
+            <div class="border-bottom border-left border-right mt-3">
+              <h6 class="d-inline">Opciones de menú: </h6>
+
+              <select class="form-select" (change)="filterByModulos($event)">
+                <option value="">---Todos los Modulos---</option>
+                <option *ngFor="let m of modulos" [value]="m.idModulo">{{ m.nombreModulo }}</option>
+              </select>
+
+              <!-- Menús por asignar-->
+              <ul class="list-group mt-3">
+                <li *ngIf="menus.length > 0" class="list-group-item list-group-item-action list-group-item-success p-2">
+                  <div>
+                    <span class="fw-semibold">Menus para asignar</span>
+                  </div>
+                </li>
+              </ul>
+              <div style="max-height: 500px;overflow-y: scroll;">
+                <!-- Menús para asignar -->
+                <ul class="list-group">
+                  <ng-container *ngFor="let m of menus">
+                    <li class="list-group-item list-group-item-action d-flex justify-content-between">
+                      <div class="row w-100">
+                        <div class="col-6 col-sm-3">
+                          <div class="d-flex justify-content-between">
+                            <small class="fs-6">{{m.nombreMenu}}</small>
+                            <i class="bx bx-info-circle hand text-secondary" matTooltip="{{ m.descMenu }}"></i>
+                          </div>
+                          <small class="d-block text-secondary">{{m.nombreModulo}}</small>
+                        </div>
+                        <div class="col-12 col-sm-9">
+                          <div class="row w-100">
+                            <div class="col-6 col-md-4 col-lg">
+                              <mat-checkbox class="example-margin" (change)="seleccionarTodos($event.checked, m)" [(ngModel)]="m.todos" color="primary">
+                                Todos
+                              </mat-checkbox>
+                            </div>
+                            <div class="col-6 col-md-4 col-lg">
+                              <mat-checkbox class="example-margin" *ngIf="m.menuConsulta" (change)="seleccionarUno(m)" [(ngModel)]="m.consulta">
+                                Consulta
+                              </mat-checkbox>
+                            </div>
+                            <div class="col-6 col-md-4 col-lg">
+                              <mat-checkbox *ngIf="m.menuInserta" (change)="seleccionarUno(m)" [(ngModel)]="m.inserta">
+                                Inserta
+                              </mat-checkbox>
+                            </div>
+                            <div class="col-6 col-md-4 col-lg">
+                              <mat-checkbox *ngIf="m.menuActualiza" (change)="seleccionarUno(m)" [(ngModel)]="m.actualiza">
+                                Actualiza
+                              </mat-checkbox>
+                            </div>
+                            <div class="col-6 col-md-4 col-lg">
+                              <mat-checkbox *ngIf="m.menuActiva" (change)="seleccionarUno(m)" [(ngModel)]="m.activa">
+                                Activa/Inactiva
+                              </mat-checkbox>
+                            </div>
+                            <div class="col-6 col-md-4 col-lg">
+                              <mat-checkbox *ngIf="m.menuElimina" (change)="seleccionarUno(m)" [(ngModel)]="m.elimina">
+                                Elimina
+                              </mat-checkbox>
+                            </div>
+                            <div class="col-6 col-md-4 col-lg">
+                              <mat-checkbox *ngIf="m.menuEjecuta" (change)="seleccionarUno(m)" [(ngModel)]="m.ejecuta">
+                                Ejecuta
+                              </mat-checkbox>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                  </ng-container>
+                </ul>
+              </div>
+              <!-- Menús asignados -->
+              <ul class="list-group">
+                <li *ngIf="menusSeleccionados.length > 0" class="list-group-item active p-2" style="background-color: #1976D2;">
+                  <div>
+                    <span class="fw-semibold">Menús asignados: {{ menusSeleccionados.length }}</span>
+                  </div>
+                </li>
+              </ul>
+              <div style="max-height: 400px;overflow-y: scroll;">
+                <ul class="list-group">
+                  <ng-container *ngFor="let ms of menusSeleccionados">
+                    <li class="list-group-item list-group-item-action d-flex justify-content-between">
+                      <div class="row w-100">
+                        <div class="col-6 col-sm-3">
+                          <div class="d-flex justify-content-between">
+                            <small class="fs-6">{{ms.nombreMenu}}</small>
+                            <i class="bx bx-info-circle hand" matTooltip="{{ ms.descMenu }}"></i>
+                          </div>
+                          <small class="d-block text-secondary">{{ms.nombreModulo}}</small>
+                        </div>
+                        <div class="col-12 col-sm-9">
+                          <div class="row w-100">
+                            <div class="col-6 col-md-4 col-lg">
+                              <mat-checkbox (change)="seleccionarTodos($event.checked, ms)" [indeterminate]="ms.todosInde"
+                                [(ngModel)]="ms.todos" color="primary">
+                                Todos
+                              </mat-checkbox>
+                            </div>
+                            <div class="col-6 col-md-4 col-lg">
+                              <mat-checkbox *ngIf="ms.menuConsulta" (change)="seleccionarUno(ms)" [(ngModel)]="ms.consulta">
+                                Consulta
+                              </mat-checkbox>
+                            </div>
+                            <div class="col-6 col-md-4 col-lg">
+                              <mat-checkbox *ngIf="ms.menuInserta" (change)="seleccionarUno(ms)" [(ngModel)]="ms.inserta">
+                                Inserta
+                              </mat-checkbox>
+                            </div>
+                            <div class="col-6 col-md-4 col-lg">
+                              <mat-checkbox *ngIf="ms.menuActualiza" (change)="seleccionarUno(ms)" [(ngModel)]="ms.actualiza">
+                                Actualiza
+                              </mat-checkbox>
+                            </div>
+                            <div class="col-6 col-md-4 col-lg">
+                              <mat-checkbox *ngIf="ms.menuActiva" (change)="seleccionarUno(ms)" [(ngModel)]="ms.activa">
+                                Activa/Inactiva
+                              </mat-checkbox>
+                            </div>
+                            <div class="col-6 col-md-4 col-lg">
+                              <mat-checkbox *ngIf="ms.menuElimina" (change)="seleccionarUno(ms)" [(ngModel)]="ms.elimina">
+                                Elimina
+                              </mat-checkbox>
+                            </div>
+                            <div class="col-6 col-md-4 col-lg">
+                              <mat-checkbox *ngIf="ms.menuEjecuta" (change)="seleccionarUno(ms)" [(ngModel)]="ms.ejecuta">
+                                Ejecuta
+                              </mat-checkbox>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                  </ng-container>
+                </ul>
+              </div>
+            </div>
+
+            <div class="d-flex justify-content-end mt-4">
+              <a routerLink="/perfiles" *ngIf="!formBuilder.formGroup.invalid" matTooltip="Cancelar" class="btn btn-danger waves-effect btn-label waves-light me-3">
+                <i class="bx bx-x label-icon"></i>Cancelar
+              </a>
+              <button
+                (click)="savePerfil()"
+                matTooltip="Guardar cambios"
+                [disabled]="formBuilder.formGroup.invalid || !menusSeleccionados.length"
+                class="btn btn-primary waves-effect btn-label waves-light">
+                <i class="bx bx-save label-icon"></i>Guardar
+              </button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

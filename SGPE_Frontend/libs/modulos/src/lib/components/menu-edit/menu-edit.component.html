@@ -1,0 +1,85 @@
+<div class="d-flex mt-3 mb-1 mx-3">
+<h3> {{ isCreate ? 'Crear' : 'Editar' }} Menú</h3>
+<button class="btn-close" mat-button mat-dialog-close></button>
+</div>
+<mat-divider />
+<mat-dialog-content>
+  <div class="row">
+    <form class="col-12" [formGroup]="formBuilder.formGroup">
+      <label>Nombre menú</label>
+      <input type="text" class="form-control form-control-sm"
+        [ngClass]="{'is-invalid': formBuilder.formErrors['nombreMenu']}" placeholder="Nombre menú"
+        formControlName="nombreMenu">
+      <small class="text-danger">{{ formBuilder.formErrors['nombreMenu'] }}</small>
+
+      <label>Descripción</label>
+      <input type="text" class="form-control form-control-sm"
+        [ngClass]="{'is-invalid': formBuilder.formErrors['descMenu']}" placeholder="Descripción"
+        formControlName="descMenu">
+      <small class="text-danger">{{ formBuilder.formErrors['descMenu'] }}</small>
+
+      <label>Etiqueta menú</label>
+      <input type="text" class="form-control form-control-sm"
+        [ngClass]="{'is-invalid': formBuilder.formErrors['etiquetaMenu']}" placeholder="Etiqueta menú"
+        formControlName="etiquetaMenu">
+      <small class="text-danger">{{ formBuilder.formErrors['etiquetaMenu'] }}</small>
+
+      <label>Url</label>
+      <input type="text" class="form-control form-control-sm" [ngClass]="{'is-invalid': formBuilder.formErrors['url']}"
+        placeholder="Url" formControlName="url">
+      <small class="text-danger">{{ formBuilder.formErrors['url'] }}</small>
+
+      <div class="d-flex flex-wrap mt-2">
+        <div>
+          <label class="d-block">¿Menú visible?</label>
+          <input type="checkbox" id="checkbox1" switch="success" formControlName="visible" />
+          <label for="checkbox1" data-On-label="Si" data-off-label="No"></label>
+        </div>
+      </div>
+
+      <label class="d-inline me-2">Orden</label>
+      <i class="mt-1 bx bx-info-circle hand text-info" matTooltip='Si el menú "NO" es visible el orden sera "0"'></i>
+      <input type="number" class="form-control form-control-sm"
+        [ngClass]="{'is-invalid': formBuilder.formErrors['orden']}" placeholder="Orden" formControlName="orden">
+      <small class="text-danger">{{ formBuilder.formErrors['orden'] }}</small>
+
+      <div class="d-flex flex-wrap gap-2 mt-2">
+        <div>
+          <label class="d-block">Consulta</label>
+          <input type="checkbox" id="switch1" switch="primary" formControlName="consulta" />
+          <label for="switch1" data-On-label="Si" data-off-label="No"></label>
+        </div>
+        <div class="ms-3">
+          <label class="d-block">Inserta</label>
+          <input type="checkbox" id="switch2" switch="primary" formControlName="inserta" />
+          <label for="switch2" data-On-label="Si" data-off-label="No"></label>
+        </div>
+        <div class="ms-3">
+          <label class="d-block">Actualiza</label>
+          <input type="checkbox" id="switch3" switch="primary" formControlName="actualiza" />
+          <label for="switch3" data-On-label="Si" data-off-label="No"></label>
+        </div>
+        <div class="ms-3">
+          <label class="d-block">Elimina</label>
+          <input type="checkbox" id="switch4" switch="primary" formControlName="elimina" />
+          <label for="switch4" data-On-label="Si" data-off-label="No"></label>
+        </div>
+        <div class="ms-3">
+          <label class="d-block">Activa</label>
+          <input type="checkbox" id="switch5" switch="primary" formControlName="activa" />
+          <label for="switch5" data-On-label="Si" data-off-label="No"></label>
+        </div>
+        <div class="ms-3">
+          <label class="d-block">Ejecuta</label>
+          <input type="checkbox" id="switch6" switch="primary" formControlName="ejecuta" />
+          <label for="switch6" data-On-label="Si" data-off-label="No"></label>
+        </div>
+      </div>
+    </form>
+  </div>
+</mat-dialog-content>
+<mat-divider />
+<mat-dialog-actions>
+    <button class="btn btn-danger me-2" mat-dialog-close>Cancelar</button>
+    <button class="btn btn-primary"  [disabled]="formBuilder.formGroup.invalid" (click)="saveMenu()">Guardar</button>
+</mat-dialog-actions>

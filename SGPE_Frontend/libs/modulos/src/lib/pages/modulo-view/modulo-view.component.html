@@ -1,0 +1,102 @@
+<sgpe-ws-espiga
+  title="Detalle Modulo"
+  titleColor="info"
+  [previousPages]="[{title: 'Modulos', link:'/modulos'}]"
+/>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-4">
+            <label class="form-label">Nombre Modulo</label>
+            <p>{{ modulo.nombreModulo }}</p>
+          </div>
+
+          <div class="col-4">
+            <label class="form-label">Descripción</label>
+            <p>{{ modulo.descModulo }}</p>
+          </div>
+
+          <div class="col-4">
+            <label class="form-label">Icono prefijo</label>
+            <p>{{ modulo.iconoPrefijo }}</p>
+          </div>
+
+          <div class="col-4">
+            <label class="form-label">Icono nombre</label>
+            <p>{{ modulo.iconoNombre }}</p>
+          </div>
+
+          <div class="col-4">
+            <label class="form-label">Orden</label>
+            <p>{{ modulo.orden }}</p>
+          </div>
+
+          <div class="col-4">
+            <label class="form-label">Estado</label>
+            <p>{{ modulo.activo ? 'Activo' : 'Inactivo' }}</p>
+          </div>
+        </div>
+
+        <h2 class="text-info">Menús</h2>
+
+        <table class="table table-hover table-sm">
+          <thead>
+            <tr>
+              <th scope="col">Nombre Menu</th>
+              <th scope="col">Descripción</th>
+              <th scope="col">Etiqueta</th>
+              <th scope="col">Url</th>
+              <th scope="col">Orden</th>
+              <th scope="col">Estado</th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let m of menus">
+              <td>{{ m.nombreMenu }}</td>
+              <td>{{ m.descMenu }}</td>
+              <td>{{ m.etiquetaMenu }}</td>
+              <td>{{ m.url }}</td>
+              <td>{{ m.orden }}</td>
+              <td>{{ m.activo ? 'Activo':'Inactivo' }}</td>
+              <td>
+                <i class="bx bx-{{m.consulta ? 'check' : 'x'}} label-icon text-danger ms-2 ico-scale"></i>
+                <small class="d-block m-0 p-0">consulta</small>
+              </td>
+              <td>
+                <i class="bx bx-{{m.inserta ? 'check' : 'x'}} label-icon text-danger ms-2 ico-scale"></i>
+                <small class="d-block m-0 p-0">inserta</small>
+              </td>
+              <td>
+                <i class="bx bx-{{m.actualiza ? 'check' : 'x'}} label-icon text-danger ms-2 ico-scale"></i>
+                <small class="d-block m-0 p-0">actualiza</small>
+              </td>
+              <td>
+                <i class="bx bx-{{m.elimina ? 'check' : 'x'}} label-icon text-danger ms-2 ico-scale"></i>
+                <small class="d-block m-0 p-0">elimina</small>
+              </td>
+              <td>
+                <i class="bx bx-{{m.activa ? 'check' : 'x'}} label-icon text-danger ms-2 ico-scale"></i>
+                <small class="d-block m-0 p-0">activa</small>
+              </td>
+              <td>
+                <i class="bx bx-{{m.ejecuta ? 'check' : 'x'}} label-icon text-danger ms-2 ico-scale"></i>
+                <small class="d-block m-0 p-0">ejecuta</small>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+

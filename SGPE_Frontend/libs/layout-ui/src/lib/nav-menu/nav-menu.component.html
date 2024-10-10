@@ -1,0 +1,30 @@
+<div class="vertical-menu">
+  <div data-simplebar class="h-100">
+    <!--- Sidemenu -->
+    <div id="sidebar-menu">
+      <!-- Left Menu Start -->
+      <ul class="metismenu list-unstyled" id="side-menu">
+        <li class="menu-title">Menu</li>
+
+        <li *ngFor="let mod of modulos">
+          <a *ngIf="mod.menusUsuario.length === 1; else elseBlock" [routerLink]="mod.menusUsuario[0].url">
+            <i class="{{ mod.iconoPrefijo }} {{ mod.iconoNombre }}"></i>
+            <span>{{ mod.nombreModulo }}</span>
+          </a>
+          <ng-template #elseBlock>
+            <a class="hand has-arrow" (click)="toggleModulo(mod.idModulo)" aria-expanded="mod.activado">
+              <i class="{{ mod.iconoPrefijo }} {{ mod.iconoNombre }}"></i>
+              <span>{{ mod.nombreModulo }}</span>
+              <!-- <i class="fas fa-angle-right"></i> -->
+            </a>
+          </ng-template>
+            <ul [ngbCollapse]="!mod.activado" *ngIf="mod.menusUsuario.length > 1">
+              <li *ngFor="let m of mod.menusUsuario"><a [routerLink]="m.url">{{ m.nombreMenu }}</a></li>
+            </ul>
+        </li>
+
+      </ul>
+    </div>
+    <!-- Sidebar -->
+  </div>
+</div>

@@ -1,0 +1,68 @@
+<sgpe-ws-espiga
+  title="Detalle pedido"
+  titleColor="info"
+  [previousPages]="previousPages"
+/>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <div *ngIf="pedido" class="row">
+          <div class="col-4">
+            <label class="form-label">Identificación</label>
+            <p>{{ pedido.cedulaUsuario }}</p>
+          </div>
+
+          <div class="col-4">
+            <label class="form-label">Usuario solicita</label>
+            <p>{{ pedido.usuario }}</p>
+          </div>
+
+          <div class="col-4">
+            <label class="form-label">Fecha solicitud</label>
+            <p>{{ pedido.fechaSolicita | date: 'd/M/yyyy, h:mm a' }}</p>
+          </div>
+
+          <div class="col-4">
+            <label class="form-label">Estado pedido</label>
+            <p>{{ pedido.estadoPedido }}</p>
+          </div>
+
+          <div class="col-4">
+            <label class="form-label">Cantidad de productos</label>
+            <p>{{ pedido.cantidadProductos }}</p>
+          </div>
+
+          <div class="col-4">
+            <label class="form-label">Valor total</label>
+            <p>{{ pedido.valorTotal | currency: '' : '$ ' }}</p>
+          </div>
+        </div>
+
+        <h2>Productos solicitados</h2>
+
+        <table class="table table-hover table-sm">
+          <thead>
+            <tr>
+              <th scope="col">Codigo</th>
+              <th scope="col">Prodducto</th>
+              <th scope="col">Precio</th>
+              <th scope="col">Cantidad</th>
+              <th scope="col">Subtotal</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let m of detalles">
+              <td>{{ m.codigoErp }}</td>
+              <td>{{ m.descripcionProducto }}</td>
+              <td>{{ m.precio | currency: '' : '$ ' : '3.0-0'}}</td>
+              <td>{{ m.cantidad }}</td>
+              <td>{{ m.subTotal | currency: '' : '$ ' : '3.0-0'}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

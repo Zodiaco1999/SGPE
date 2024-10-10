@@ -1,0 +1,57 @@
+<div class="card-body">
+  <h1>Modulos</h1>
+  <a routerLink="crear" class="btn-sm btn-primary waves-effect btn-label waves-light btn-h">
+    <i class="bx bx-plus label-icon"></i>Adicionar
+  </a>
+  <div class="table-responsive">
+    <table class="table table-sm mb-0">
+      <thead>
+        <tr>
+          <th>Nombre Modulo</th>
+          <th>Descripcion</th>
+          <th>Icono Prefijo</th>
+          <th>Icono Nombre</th>
+          <th>Orden</th>
+          <th>Estado</th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let m of data$ | async">
+          <td>{{ m.nombreModulo }}</td>
+          <td>{{ m.descModulo }}</td>
+          <td>{{ m.iconoPrefijo }}</td>
+          <td>{{ m.iconoNombre }}</td>
+          <td>{{ m.orden }}</td>
+          <td>{{ m.activo ? 'Activo' : 'Inactivo' }}</td>
+          <td  class="px-0 mx-0">
+            <a [routerLink]="['editar', m.idModulo]"
+            class="btn-sm btn-success waves-effect btn-label waves-light btn-h">
+              <i class="bx bx-pencil label-icon"></i>Editar
+            </a>
+          </td>
+          <td class="px-0 mx-0">
+            <a [routerLink]="['detalle', m.idModulo]"
+            class="btn-sm btn-info waves-effect btn-label waves-light btn-h">
+              <i class="bx bx-search label-icon"></i>Detalle
+            </a>
+          </td>
+          <td class="px-0 mx-0">
+            <a (click)="changeStatusModulo(m)"
+            class="btn btn-outline-{{m.activo ? 'danger' : 'success'}} btn-sm waves-effect waves-light btn-h btn-w">
+              <i class="bx bx-{{m.activo ? 'x' : 'check'}} label-icon me-2"></i>
+              {{ m.activo ? 'Inactivar' : 'Activar' }}
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <sgpe-ws-pagination
+      [(page)]="moduloService.page"
+      [(pageSize)]="moduloService.pageSize"
+      [totalRecordsObs]="totalRecords$"
+    />
+  </div>
+</div>

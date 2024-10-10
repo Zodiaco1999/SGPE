@@ -1,0 +1,76 @@
+<sgpe-ws-espiga
+  title="Crear pedido"
+  titleColor="primary"
+  titleSize="2"
+  [previousPages]="[{title: 'Mis pedidos', link:'/pedidos/usuario'}]"
+/>
+
+<div class="row">
+  <div class="col-2"></div>
+  <div class="col-3 ms-6">
+    <small class="form-label">Empresa</small>
+    <select class="form-select form-select-sm mt-1" [formControl]="idEmpresa">
+      <option value=0>Seleccione una empresa</option>
+      <option *ngFor="let e of empresas" [value]="e.idEmpresa">{{ e.nombreEmpresa }}</option>
+    </select>
+  </div>
+  <div class="col-3">
+    <small class="f-bold">Categoria producto</small>
+    <select class="form-select form-select-sm mt-1" [formControl]="idCategoria">
+      <option value=0>===Todas===</option>
+      <option *ngFor="let c of categoriasTemp" [value]="c.idCategoriaProducto">{{ c.nombreCategoriaProducto }}</option>
+    </select>
+  </div>
+  <div class="col-1 mt-4">
+    <button [disabled]="!searchEnable" (click)="searchProducts()" matTooltip="Buscar productos"
+      class="btn btn-sm btn-primary waves-effect waves-light">
+      <i class="bx bx-search"></i>
+    </button>
+  </div>
+</div>
+
+<div class="row">
+  <div *ngIf="productosTemp.length" class="table-responsive col-9 mt-3 ms-2">
+    <table class="table table-sm mb-0">
+      <thead>
+        <tr>
+          <th>Codigo</th>
+          <th>Descripción</th>
+          <th>Precio con Iva</th>
+          <th>Imagen</th>
+          <th>Cantidad</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let p of productosTemp" [ngClass]="{'table-primary': p.cantidad > 0}">
+          <td>{{ p.codigoErp }}</td>
+          <td>{{ p.descripcionProducto }}</td>
+          <td>{{ p.precio | currency: '' : '$ ' : '3.0-0' }}</td>
+          <td>
+            <img class="ms-2" [src]="p.imagenBase64 ?? 'assets/images/product-without-image.jpg'" />
+          </td>
+          <td><input [(ngModel)]="p.cantidad" type="number" (blur)="changeQuatity()" class="form-control in-number-size"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div id="control" *ngIf="productosTemp.length" class="col-3 custom-fixed">
+    <div class="my-1"><span class="fw-bold">Cantidad de Productos: </span>{{ cantidad }}</div>
+    <div class="my-2"><span class="fw-bold">Valor Total Aprox $: </span>{{ valor | currency: '' : '' : '1.0-0' }}</div>
+    <button (click)="changeValue()" class=" mt-2 btn-sm btn-light waves-effect btn-label waves-light btn-w">
+      <i class="bx bx-calculator label-icon"></i>Liquidar
+    </button>
+    <button (click)="refresh()" class="ms-2 btn-sm btn-light waves-effect btn-label waves-light btn-w">
+      <i class="bx bx-revision label-icon"></i>Reiniciar
+    </button>
+    <div *ngIf="cantidad > 0" class="mt-3">
+      <button (click)="accept()" class="btn-sm btn-primary waves-effect btn-label waves-light btn-w">
+        <i class="bx bx-check label-icon"></i>Aceptar
+      </button>
+      <button (click)="cancel()" class="ms-2 btn-sm btn-danger waves-effect btn-label waves-light btn-w">
+        <i class="bx bx-x label-icon"></i>Cancelar
+      </button>
+    </div>
+  </div>
+</div>

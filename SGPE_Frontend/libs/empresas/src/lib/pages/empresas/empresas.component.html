@@ -1,0 +1,36 @@
+<div class="card-body">
+  <h1>Empresas</h1>
+  <a routerLink="crear" class="btn-sm btn-primary waves-effect btn-label waves-light btn-h">
+    <i class="bx bx-plus label-icon"></i>Adicionar
+  </a>
+
+  <div class="table-responsive">
+    <table class="table table-sm mb-0">
+        <thead>
+            <tr>
+              <th sortable="idEmpresa" (sort)="empresaService.onSort($event)">Id Empresa</th>
+              <th sortable="nit" (sort)="empresaService.onSort($event)">Nit</th>
+              <th sortable="nombreEmpresa" (sort)="empresaService.onSort($event)">Nombre Empresa</th>
+              <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let e of data$ | async">
+                <td>{{e.idEmpresa}}</td>
+                <td>{{e.nit}}</td>
+                <td>{{e.nombreEmpresa}}</td>
+                <td>
+                  <a [routerLink]="['editar', e.idEmpresa]" class="btn-sm btn-success waves-effect btn-label waves-light btn-h">
+                    <i class="bx bx-pencil label-icon"></i>Editar
+                  </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <sgpe-ws-pagination
+      [(page)]="empresaService.page"
+      [(pageSize)]="empresaService.pageSize"
+      [totalRecordsObs]="totalRecords$"
+    />
+   </div>
+</div>

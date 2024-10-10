@@ -1,0 +1,79 @@
+<sgpe-ws-espiga
+  title="Detalle perfil"
+  titleColor="info"
+  [previousPages]="[{title: 'Perfiles', link:'/perfiles'}]"
+/>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <div *ngIf="perfil" class="row">
+          <div class="col-6">
+            <label class="form-label">Nombre perfil</label>
+            <p>{{ perfil.nombrePerfil }}</p>
+          </div>
+
+          <div class="col-6">
+            <label class="form-label">Descripción perfil</label>
+            <p>{{ perfil.descPerfil }}</p>
+          </div>
+
+          <div class="col-6">
+            <label class="form-label">Estado</label>
+            <p>{{ perfil.activo ? 'Activo':'Inactivo' }}</p>
+          </div>
+        </div>
+
+        <h2>Menus Asignados</h2>
+
+        <table class="table table-hover table-sm">
+          <thead>
+            <tr>
+              <th scope="col">Nombre Menu</th>
+              <th scope="col">Descripción Menu</th>
+              <th scope="col">Modulo</th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let p of perfil?.perfilMenus">
+              <td>{{ p.nombreMenu }}</td>
+              <td>{{ p.descMenu }}</td>
+              <td>{{ p.nombreModulo }}</td>
+              <td>
+                <i class="bx bx-{{p.consulta ? 'check' : 'x'}} label-icon text-danger ms-2 ico-scale"></i>
+                <small class="d-block m-0 p-0">consulta</small>
+              </td>
+              <td>
+                <i class="bx bx-{{p.inserta ? 'check' : 'x'}} label-icon text-danger ms-2 ico-scale"></i>
+                <small class="d-block m-0 p-0">inserta</small>
+              </td>
+              <td>
+                <i class="bx bx-{{p.actualiza ? 'check' : 'x'}} label-icon text-danger ms-2 ico-scale"></i>
+                <small class="d-block m-0 p-0">actualiza</small>
+              </td>
+              <td>
+                <i class="bx bx-{{p.elimina ? 'check' : 'x'}} label-icon text-danger ms-2 ico-scale"></i>
+                <small class="d-block m-0 p-0">elimina</small>
+              </td>
+              <td>
+                <i class="bx bx-{{p.activa ? 'check' : 'x'}} label-icon text-danger ms-2 ico-scale"></i>
+                <small class="d-block m-0 p-0">activa</small>
+              </td>
+              <td>
+                <i class="bx bx-{{p.ejecuta ? 'check' : 'x'}} label-icon text-danger ms-2 ico-scale"></i>
+                <small class="d-block m-0 p-0">ejecuta</small>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

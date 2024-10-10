@@ -1,0 +1,46 @@
+<sgpe-ws-espiga
+  title="{{idEmpresa ? 'Editar' : 'Crear'}} Empresa"
+  titleColor="{{idEmpresa ? 'success' : 'primary'}}"
+  [previousPages]="[{title: 'Empresas', link:'/empresas'}]"
+/>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body p-4">
+        <div class="col-lg-12 ms-lg-auto">
+          <div class="mt-4 mt-lg-0">
+            <form [formGroup]="formBuilder.formGroup" (ngSubmit)="saveEmpresa()">
+              <div class="row mb-4">
+                <label class="col-sm-3 col-form-label">Nit</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" [ngClass]="{'is-invalid': formBuilder.formErrors['nit']}" placeholder="Nit" formControlName="nit" >
+                  <small class="text-danger">{{ formBuilder.formErrors['nit'] }}</small>
+                </div>
+              </div>
+
+              <div class="row mb-4">
+                <label class="col-sm-3 col-form-label">Nombre Empresa</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" [ngClass]="{'is-invalid': formBuilder.formErrors['nombreEmpresa']}" placeholder="Nombre empresa" formControlName="nombreEmpresa" >
+                  <small class="text-danger">{{ formBuilder.formErrors['nombreEmpresa'] }}</small>
+                </div>
+              </div>
+
+              <div class="row justify-content-end">
+                <div class="col-sm-9">
+                  <div>
+                    <button type="submit" class="btn btn-primary w-md" [disabled]="formBuilder.formGroup.invalid">Guardar</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

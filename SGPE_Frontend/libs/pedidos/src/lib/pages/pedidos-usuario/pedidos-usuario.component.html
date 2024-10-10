@@ -1,0 +1,41 @@
+<div class="card-body" >
+  <h1 class="text-primary">Mis Pedidos</h1>
+  <div class="d-flex justify-content-between mb-2">
+    <a routerLink="/pedidos/crear" class="btn-sm btn-primary waves-effect btn-label waves-light btn-h">
+      <i class="bx bx-plus label-icon"></i>Crear pedido
+    </a>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-sm mb-0">
+      <thead>
+        <tr>
+          <th>Fecha solictud</th>
+          <th>Estado pedido</th>
+          <th>Cantidad productos</th>
+          <th>Valor total</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let p of data$ | async">
+          <td>{{ p.fechaSolicita | date: 'd/M/yyyy, h:mm a' }}</td>
+          <td>{{ p.estadoPedido }}</td>
+          <td>{{ p.cantidadProductos }}</td>
+          <td>{{ p.valorTotal | currency: '' : '$ ' }}</td>
+          <td>
+            <a [routerLink]="['/pedidos/usuario/detalle', p.idPedido]"
+               class="btn-sm btn-info waves-effect btn-label waves-light btn-h">
+              <i class="bx bx-search label-icon"></i>Detalle
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <sgpe-ws-pagination
+      [(page)]="pedidoService.page"
+      [(pageSize)]="pedidoService.pageSize"
+      [totalRecordsObs]="totalRecords$"
+    />
+  </div>
+</div>

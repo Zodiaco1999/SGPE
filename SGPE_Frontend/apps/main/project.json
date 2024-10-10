@@ -1,0 +1,114 @@
+{
+  "name": "main",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "sgpe-ws",
+  "sourceRoot": "apps/main/src",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:browser",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/main",
+        "index": "apps/main/src/index.html",
+        "main": "apps/main/src/main.ts",
+        "polyfills": ["zone.js"],
+        "tsConfig": "apps/main/tsconfig.app.json",
+        "assets": [
+          "apps/main/src/favicon.ico",
+          "apps/main/src/assets",
+          {
+            "glob": "**/*",
+            "input": "./libs/layout-ui/src/assets",
+            "output": "./assets"
+          }
+        ],
+        "styles": [
+          "apps/main/src/styles.scss",
+          "libs/layout-ui/src/styles.scss",
+          "libs/layout-ui/src/material-theme.scss"
+        ],
+        "scripts": [
+          "./libs/layout-ui/src/assets/libs/jquery/jquery.min.js",
+          "./libs/layout-ui/src/assets/libs/feather-icons/feather.min.js",
+          "./libs/layout-ui/src/assets/libs/bootstrap/js/bootstrap.bundle.min.js",
+          "./libs/layout-ui/src/assets/libs/apexcharts/apexcharts.min.js",
+          "./libs/layout-ui/src/assets/libs/simplebar/simplebar.min.js",
+          "./libs/layout-ui/src/assets/libs/node-waves/waves.min.js"
+        ]
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "configurations": {
+        "production": {
+          "browserTarget": "main:build:production"
+        },
+        "development": {
+          "browserTarget": "main:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "main:build"
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/main/**/*.ts", "apps/main/**/*.html"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/main/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    },
+    "serve-static": {
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "main:build"
+      }
+    }
+  }
+}
